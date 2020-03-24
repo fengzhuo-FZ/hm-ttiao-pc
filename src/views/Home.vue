@@ -50,14 +50,14 @@
         <!-- 图标 -->
         <span class="el-icon-s-fold icon"></span>
         <!-- 文字 -->
-        <span class="text">江苏传智播客科技教育有限公司</span>
+        <span class="text">啥啥啥啥公司</span>
         <!-- 下拉菜单组件 -->
         <el-dropdown class="my-dropdown">
           <span class="el-dropdown-link">
             <!-- 头像 -->
             <img class="user-avatar" src="../assets/avatar.jpg" />
             <!-- 名字 -->
-            <span class="user-name">张三丰</span>
+            <span class="user-name">哈哈哈哈哈哈哈</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -66,8 +66,8 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
-      <!-- 主体内容 -->
-      <el-main>Main</el-main>
+      <!-- 欢迎组件 二级路由对显示容器 -->
+      <router-view></router-view>
     </el-container>
   </el-container>
 </template>
