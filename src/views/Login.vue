@@ -3,11 +3,11 @@
     <el-card class="my-card">
       <img src="../assets/logo_index.png" alt />
       <!-- 表单 -->
-      <el-form>
-        <el-form-item>
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" status-icon>
+        <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input
             v-model="loginForm.code"
             placeholder="请输入验证码"
@@ -19,7 +19,7 @@
           <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width:100%">登 录</el-button>
+          <el-button @click="login()" type="primary" style="width:100%">登 录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -30,19 +30,52 @@
 export default {
   name: "my-login",
   data() {
+    // 自定义校验规则
+    const checkMobile = (rule, value, callback) => {
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback();
+      } else {
+        callback(new Error("手机号格式错误"));
+      }
+    };
     return {
       // 登录表单数据对象
       loginForm: {
         mobile: "",
         code: ""
+      },
+      // 校验规则对象
+      loginRules: {
+        mobile: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          // 指定一个自定义校验函数,失去焦点后触发
+          { validator: checkMobile, trigger: "blur" }
+        ],
+        code: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+          { len: 6, message: "长度在6个字符", trigger: "blur" }
+        ]
       }
     };
+  },
+  methods: {
+    // 登录函数
+    login() {
+      // 登录前，对整体表单进行校验
+      // this.$refs.loginForm  就是组件实例
+      this.$refs.loginForm.validate(valid => {
+        // valid 代表整体表单是否校验成功
+        if (valid) {
+          // 校验成功，进行登录
+          console.log("进行登录");
+        }
+      });
+    }
   }
 };
 </script>
 
 <style scoped lang='less'>
-// 全屏容器
 .login-container {
   position: absolute;
   left: 0;
