@@ -63,8 +63,8 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <el-dropdown-item @click.native="setting()" icon="el-icon-setting">个人设置</el-dropdown-item>
+            <el-dropdown-item @click.native="logout()" icon="el-icon-unlock">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -99,6 +99,17 @@ export default {
     // 切换侧边栏展开与收起
     toggleAside() {
       this.isOpen = !this.isOpen;
+    },
+    // 跳转个人设置
+    setting() {
+      this.$router.push("/setting");
+    },
+    // 进行退出
+    logout() {
+      // 1. 清除用户信息
+      auth.delUser();
+      // 2. 跳转到登录页面
+      this.$router.push("/login");
     }
   }
 };
