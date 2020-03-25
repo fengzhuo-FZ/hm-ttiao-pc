@@ -57,9 +57,9 @@
         <el-dropdown class="my-dropdown">
           <span class="el-dropdown-link">
             <!-- 头像 -->
-            <img class="user-avatar" src="../assets/avatar.jpg" />
+            <img class="user-avatar" :src="userPhoto" />
             <!-- 名字 -->
-            <span class="user-name">哈哈哈哈哈哈哈</span>
+            <span class="user-name">{{userName}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -75,13 +75,25 @@
 </template>
 
 <script>
+import auth from "@/utils/auth";
 export default {
   name: "my-home",
   data() {
     return {
       // 侧边栏是不是展开状态，默认展开
-      isOpen: true
+      isOpen: true,
+      // 用户名
+      userName: "",
+      // 用户头像
+      userPhoto: ""
     };
+  },
+  created() {
+    // 1. 从本地存储中获取数据
+    const user = auth.getUser();
+    // 2. 给data中数据赋值
+    this.userName = user.name;
+    this.userPhoto = user.photo;
   },
   methods: {
     // 切换侧边栏展开与收起
