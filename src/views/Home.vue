@@ -84,7 +84,7 @@ export default {
       // 侧边栏是不是展开状态，默认展开
       isOpen: true,
       // 用户名
-      userName: "",
+      userName: "哈哈",
       // 用户头像
       userPhoto: ""
     };
