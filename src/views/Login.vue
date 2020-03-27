@@ -62,29 +62,38 @@ export default {
     };
   },
   methods: {
-    // 登录函数
     login() {
       // 登录前，对整体表单进行校验
       // this.$refs.loginForm  就是组件实例
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         // valid 代表整体表单是否校验成功
         if (valid) {
           // 校验成功，进行登录
-          // console.log("进行登录");
-          this.$http
-            .post("authorizations", this.loginForm)
-            .then(res => {
-              // 登录成功
-              // 存储用户信息 res === {data:{message:'提示信息',data:'用户信息对象'}}
-              // res.data 是响应主体，响应主体才是后台返回的数据
-              auth.setUser(res.data.data);
-              // 跳转到首页
-              this.$router.push("/");
-            })
-            .catch(() => {
-              // 错误提示
-              this.$message.error("手机号或验证码错误");
-            });
+          // console.log('进行登录')
+          // this.$http.post('authorizations', this.loginForm).then(res => {
+          //   // 登录成功
+          //   // 存储用户信息 res === {data:{message:'提示信息',data:'用户信息对象'}}
+          //   // res.data 是响应主体，响应主体才是后台返回的数据
+          //   auth.setUser(res.data.data)
+          //   // 跳转到首页
+          //   this.$router.push('/')
+          // }).catch(() => {
+          //   // 错误提示
+          //   this.$message.error('手机号或验证码错误')
+          // })
+
+          // async 和 await 修改登录请求
+          // res是什么？是响应报文对象（响应结果对象），响应主体数据 res.data
+          // 一下三句代码是理想情况下的代码，但是下面三句代码可能报错
+          // ES语法：try{ // 可能出现异常代码片段 }catch(e){ // 捕获异常，前面try的代码片段出现异常，执行catch里面代码 }
+          // catch(e) e参数：error 错误对象，exception 异常对象。
+          try {
+            const res = await this.$http.post("authorizations", this.loginForm);
+            auth.setUser(res.data.data);
+            this.$router.push("/");
+          } catch (e) {
+            this.$message.error("手机号或验证码错误");
+          }
         }
       });
     }
