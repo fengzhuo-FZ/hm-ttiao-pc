@@ -1,5 +1,5 @@
 <template>
-  <div class="container-404"></div>
+  <div class="container"></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {};
 </script>
 
 <style scoped lang='less'>
-.container-404 {
+.container {
   position: absolute;
   left: 0;
   top: 0;
