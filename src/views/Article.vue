@@ -1,5 +1,5 @@
 <template>
-  <div class="article-container"></div>
+  <div class="article-container">内容管理</div>
 </template>
 
 <script>
