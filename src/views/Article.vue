@@ -33,7 +33,6 @@
         </el-form-item>
         <el-form-item label="日期：">
           <el-date-picker
-            unlink-panels
             v-model="dateArr"
             type="daterange"
             range-separator="至"
@@ -64,10 +63,11 @@ export default {
         end_pubdate: null
       },
       // 频道下拉选项数据
-      channelOptions: [{ value: 1000, label: "前端" }]
+      channelOptions: [{ value: 1000, label: "前端" }],
+      // 时间范围 [起始日期,结束日期]
+      // 当日期控件选择了日期后动态给 reqParams 中 begin_pubdate end_pubdate 赋值
+      dateArr: []
     };
-    // 日期
-    dateArr: [];
   },
   created() {
     // 测试获取后台数据

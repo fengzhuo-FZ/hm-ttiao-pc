@@ -106,6 +106,7 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
+  // 让高度和宽度直接去继承窗口的大小
   width: 100%;
   height: 100%;
   //   background-color: pink;
