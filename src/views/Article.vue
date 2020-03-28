@@ -47,9 +47,7 @@
 </template>
 
 <script>
-import MyBread from "@/components/my-bread";
 export default {
-  components: { MyBread },
   name: "my-article",
   data() {
     return {

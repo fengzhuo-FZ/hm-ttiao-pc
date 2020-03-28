@@ -20,6 +20,11 @@ import router from './router/index'
 // 使用绝对路径就没问题，@ 代表src的绝对路径。补充：vue-cli下才可使用。
 import axios from '@/api'
 
+// 使用自己封装的插件
+import plugin from '@/utils/plugin'
+Vue.use(plugin)
+
+
 // 挂载axios
 Vue.prototype.$http = axios
 
