@@ -44,7 +44,7 @@ export default {
     return {
       // 登录表单数据对象
       loginForm: {
-        mobile: "13966666666",
+        mobile: "13766666666",
         code: "246810"
       },
       // 校验规则对象
