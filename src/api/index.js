@@ -2,6 +2,7 @@
 import axios from 'axios'
 import auth from '@/utils/auth'
 import router from '@/router'
+import JSONbig from 'json-bigint'
 
 // 进行axios的配置，将来这回又很多axios相关的配置
 // 基准地址
@@ -9,6 +10,19 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 
 //请求头 配置token
 // axios.defaults.headers.Authorization = `Bearer ${auth.getUser().token}`
+
+// 1. transformResponse配置中的函数   2. 响应拦截器    3. then()catch()
+axios.defaults.transformResponse = [data => {
+    // data 就是后台原始响应数据  理想情况下：json字符串
+    // 其实在现在我们的后台接口有时候，返回的不是json字符串，结果来进行转换会报错
+    // 转换后的数据要return出去
+    try {
+        return JSONbig.parse(data)
+    } catch (e) {
+        return data
+    }
+}]
+
 
 // 请求拦截器
 axios.interceptors.request.use(config => {
