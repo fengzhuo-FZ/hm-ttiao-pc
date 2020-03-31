@@ -10,6 +10,7 @@ import Welcome from '../views/Welcome.vue'
 import NotFound from '../views/404.vue'
 import Article from '../views/Article.vue'
 import Image from '../views/Image.vue'
+import Publish from '../views/Publish.vue'
 
 
 // 导入auth模块
@@ -25,7 +26,8 @@ const routes = [
         path: '/', component: Home, children: [
             { path: '/', component: Welcome },
             { path: '/article', component: Article },
-            { path: '/image', component: Image }
+            { path: '/image', component: Image },
+            { path: '/publish', component: Publish }
 
         ]
     },
