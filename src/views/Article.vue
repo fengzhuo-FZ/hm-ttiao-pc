@@ -19,19 +19,8 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道：">
-          <el-select
-            @change="changeChannel"
-            clearable
-            v-model="reqParams.channel_id"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in channelOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
+          <!-- 自己封装的频道组件 -->
+          <my-channel></my-channel>
         </el-form-item>
         <el-form-item label="日期：">
           <el-date-picker
@@ -122,8 +111,7 @@ export default {
         page: 1, // 默认第一页
         per_page: 10 // 一页显示10条
       },
-      // 频道下拉选项数据
-      channelOptions: [],
+
       // 时间范围 [起始日期,结束日期]
       // 当日期控件选择了日期后动态给 reqParams 中 begin_pubdate end_pubdate 赋值
       dateArr: [],
@@ -133,7 +121,6 @@ export default {
     };
   },
   created() {
-    this.getChannelOptions();
     this.getArticles();
   },
   methods: {
@@ -165,11 +152,7 @@ export default {
     editArticle(id) {
       this.$router.push(`/publish?id=${id}`);
     },
-    // 选择频道
-    changeChannel(value) {
-      // 清空的时候值是 '' 不符合后台要求，你应该改成 null  代表查询全部
-      if (value === "") this.reqParams.channel_id = null;
-    },
+
     // 筛选文章
     filterArticle() {
       // 回到第一页
@@ -206,18 +189,6 @@ export default {
       this.articles = data.results;
       // 总条数
       this.total = data.total_count;
-    },
-
-    // 获取频道下拉选项数据
-    async getChannelOptions() {
-      // 解构是针对res的，那么res的数据结构 {data:{message:'OK',data:{channels:[]}}}
-      // const {data} = res 现在：data响应主体  res.data
-      // const { data: { data } } = res  现在：data具体data字段对应数据，res.data.data
-      const {
-        data: { data }
-      } = await this.$http.get("channels");
-      // this.channelOptions = [{id:'频道ID',name:'频道名称'},...]
-      this.channelOptions = data.channels;
     }
   }
 };
