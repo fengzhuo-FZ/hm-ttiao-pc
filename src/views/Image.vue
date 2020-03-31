@@ -14,10 +14,10 @@
       </div>
       <!-- 图片列表 -->
       <div class="img_list">
-        <div class="img_item" v-for="i in 10" :key="i">
-          <img src="../assets/avatar.jpg" alt />
+        <div class="img_item" v-for="item in images" :key="item.id">
+          <img :src="item.url" alt />
           <div class="option">
-            <span class="el-icon-star-off"></span>
+            <span class="el-icon-star-off" :style="{color:item.is_collected?'red':'#fff'}"></span>
             <span class="el-icon-delete"></span>
           </div>
         </div>
@@ -39,8 +39,22 @@ export default {
         collect: false,
         page: 1,
         per_page: 10
-      }
+      },
+      // 素材列表
+      images: []
     };
+  },
+  created() {
+    this.getImages();
+  },
+  methods: {
+    // 获取素材列表
+    async getImages() {
+      const {
+        data: { data }
+      } = await this.$http.get("user/images", { params: this.reqParams });
+      this.images = data.results;
+    }
   }
 };
 </script>
