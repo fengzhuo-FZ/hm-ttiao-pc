@@ -13,6 +13,9 @@ import App from './App.vue'
 // 导入路由实例
 import router from './router/index'
 
+// 导入公用样式
+import '@/styles/index.less'
+
 // 导入配置好的axios
 // 完整路径：./api/index.js
 // 简写  ./api  index.js是默认索引文件可以省略

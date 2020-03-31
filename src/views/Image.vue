@@ -39,6 +39,15 @@
     <!-- 对话框 -->
     <el-dialog title="添加素材" :visible.sync="dialogVisible" width="300px">
       <span>上传组件</span>
+      <el-upload
+        class="avatar-uploader"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :show-file-list="false"
+        :on-success="uploadImageSuccess"
+      >
+        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
     </el-dialog>
   </div>
 </template>
@@ -60,13 +69,17 @@ export default {
       // 总条数
       total: 0,
       // 控制对话框显示隐藏
-      dialogVisible: false
+      dialogVisible: false,
+      // 上传成功后图片地址（预览）
+      imageUrl: null
     };
   },
   created() {
     this.getImages();
   },
   methods: {
+    // 上传图片成功
+    uploadImageSuccess() {},
     // 打开添加素材对话框
     openAddImgDialog() {
       // 1. 准备对话框
