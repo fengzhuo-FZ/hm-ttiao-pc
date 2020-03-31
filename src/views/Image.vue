@@ -6,7 +6,7 @@
       </div>
       <!-- 按钮栏 -->
       <div class="btn_box">
-        <el-radio-group v-model="reqParams.collect" size="small">
+        <el-radio-group @change="changeCollect()" v-model="reqParams.collect" size="small">
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
         </el-radio-group>
@@ -16,7 +16,7 @@
       <div class="img_list">
         <div class="img_item" v-for="item in images" :key="item.id">
           <img :src="item.url" alt />
-          <div class="option">
+          <div class="option" v-if="!reqParams.collect">
             <span class="el-icon-star-off" :style="{color:item.is_collected?'red':'#fff'}"></span>
             <span class="el-icon-delete"></span>
           </div>
@@ -57,6 +57,11 @@ export default {
     this.getImages();
   },
   methods: {
+    // 切换全局与收藏
+    changeCollect() {
+      this.reqParams.page = 1;
+      this.getImages();
+    },
     // 切换分页
     changePager(newPage) {
       this.reqParams.page = newPage;
