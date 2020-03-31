@@ -22,7 +22,7 @@
               class="el-icon-star-off"
               :style="{color:item.is_collected?'red':'#fff'}"
             ></span>
-            <span class="el-icon-delete"></span>
+            <span @click="deleteImage(item.id)" class="el-icon-delete"></span>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default {
         // 默认查询全局 false 收藏 true
         collect: false,
         page: 1,
-        per_page: 2
+        per_page: 4
       },
       // 素材列表
       images: [],
@@ -61,6 +61,29 @@ export default {
     this.getImages();
   },
   methods: {
+    // 删除图片素材
+    deleteImage(id) {
+      this.$confirm("此操作将永久删除该图片素材, 是否继续?", "温馨提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          // 点击确认
+          try {
+            // 请求
+            await this.$http.delete(`user/images/${id}`);
+            // 成功提示
+            this.$message.success("删除成功");
+            // 更新当前页素材列表
+            this.getImages();
+          } catch (e) {
+            // 失败提示
+            this.$message.error("删除失败");
+          }
+        })
+        .catch(() => {});
+    },
     // 切换 添加收藏 与 取消收藏
     async toggleStatus(item) {
       try {
