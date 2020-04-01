@@ -22,9 +22,6 @@ export default {
   methods: {
     // 获取频道下拉选项数据
     async getChannelOptions() {
-      // 解构是针对res的，那么res的数据结构 {data:{message:'OK',data:{channels:[]}}}
-      // const {data} = res 现在：data响应主体  res.data
-      // const { data: { data } } = res  现在：data具体data字段对应数据，res.data.data
       const {
         data: { data }
       } = await this.$http.get("channels");

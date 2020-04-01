@@ -20,7 +20,6 @@
         </el-form-item>
         <el-form-item label="频道：">
           <!-- 自己封装的频道组件 -->
-          <!-- <my-channel :value="reqParams.channel_id" @input="reqParams.channel_id=$event"></my-channel> -->
           <my-channel v-model="reqParams.channel_id"></my-channel>
         </el-form-item>
         <el-form-item label="日期：">
