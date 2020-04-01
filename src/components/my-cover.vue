@@ -16,7 +16,13 @@
           </el-radio-group>
           <!-- 素材列表 -->
           <div class="img_list">
-            <div class="img_item" v-for="item in images" :key="item.id">
+            <div
+              :class="{selected: item.url === selectedImageUrl}"
+              @click="selectedImage(item.url)"
+              class="img_item"
+              v-for="item in images"
+              :key="item.id"
+            >
               <img :src="item.url" />
             </div>
           </div>
@@ -60,10 +66,16 @@ export default {
       // 素材列表
       images: [],
       // 总条数
-      total: 0
+      total: 0,
+      // 选中的图片地址
+      selectedImageUrl: null
     };
   },
   methods: {
+    // 选中图片
+    selectedImage(url) {
+      this.selectedImageUrl = url;
+    },
     // 打开对话框
     openDialog() {
       this.dialogVisible = true;
@@ -114,10 +126,27 @@ export default {
     border: 1px dashed #ddd;
     display: inline-block;
     margin-right: 15px;
+    position: relative;
     img {
       width: 100%;
       height: 100%;
       display: block;
+    }
+    // 给.img_item加上一个类.selected
+    // 这个类上包含一个::after的伪元素
+    // &在less中表示作用：连接符
+    // .a{.b{}}  ===> .a .b{}  后代选择器
+    // .a{&.b{}} ===> .a.b{} 交集选择器
+    // 解析后：.img_list.selected::after{}  目标
+    &.selected::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3) url(../assets/selected.png) no-repeat
+        center / 50px 50px;
     }
   }
 }
