@@ -12,6 +12,7 @@ import Article from '../views/Article.vue'
 import Image from '../views/Image.vue'
 import Publish from '../views/Publish.vue'
 import Comment from '../views/Comment.vue'
+import Fans from '../views/Fans.vue'
 
 
 
@@ -30,7 +31,8 @@ const routes = [
             { path: '/article', component: Article },
             { path: '/image', component: Image },
             { path: '/publish', component: Publish },
-            { path: '/comment', component: Comment }
+            { path: '/comment', component: Comment },
+            { path: '/fans', component: Fans }
 
         ]
     },
