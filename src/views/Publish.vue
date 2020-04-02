@@ -21,7 +21,7 @@
           </el-radio-group>
           <!-- 封面图组件 -->
           <div style="margin-top:10px">
-            <my-cover></my-cover>
+            <my-cover v-model="articleForm.cover.images[0]"></my-cover>
           </div>
         </el-form-item>
         <el-form-item label="频道：">
