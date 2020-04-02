@@ -10,13 +10,18 @@
         <el-table-column label="总评论数" prop="total_comment_count"></el-table-column>
         <el-table-column label="粉丝评论数" prop="fans_comment_count"></el-table-column>
         <el-table-column label="评论状态">
-          <!-- scope.row.comment_status 值false代表正常  值为true代表关闭了 -->
-          <template slot-scope="scope">{{scope.row.comment_status?'关闭':'正常'}}</template>
+          <!-- scope.row.comment_status 值true代表正常  值为false代表关闭了 -->
+          <template slot-scope="scope">{{scope.row.comment_status?'正常':'关闭'}}</template>
         </el-table-column>
         <el-table-column label="操作" width="120px">
           <template slot-scope="scope">
-            <el-button size="small" v-if="scope.row.comment_status" type="success">打开评论</el-button>
-            <el-button size="small" v-else type="danger">关闭评论</el-button>
+            <el-button
+              @click="toggleStatus(scope.row)"
+              size="small"
+              v-if="scope.row.comment_status"
+              type="danger"
+            >关闭评论</el-button>
+            <el-button @click="toggleStatus(scope.row)" size="small" v-else type="success">打开评论</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,6 +62,24 @@ export default {
   },
 
   methods: {
+    // 切换评论状态
+    async toggleStatus(row) {
+      // row 当前行数据，其实理解成功 comments数组遍历的时候，每一项数据对象
+      try {
+        const {
+          data: { data }
+        } = await this.$http.put(`comments/status?article_id=${row.id}`, {
+          allow_comment: !row.comment_status
+        });
+        this.$message.success(
+          data.allow_comment ? "打开评论成功" : "关闭评论成功"
+        );
+        // 更新当前数据中的状态，需要更新视图
+        row.comment_status = data.allow_comment;
+      } catch (e) {
+        this.$messge.error("操作失败");
+      }
+    },
     // 分页
     changePager(newPage) {
       this.reqParams.page = newPage;
