@@ -36,7 +36,7 @@
           <my-channel v-model="articleForm.channel_id"></my-channel>
         </el-form-item>
         <el-form-item v-if="$route.query.id">
-          <el-button type="success">修改文章</el-button>
+          <el-button type="success" @click="updateArticle()">修改文章</el-button>
         </el-form-item>
         <el-form-item v-else>
           <el-button type="primary" @click="addArticle(false)">发布文章</el-button>
@@ -129,6 +129,20 @@ export default {
       try {
         await this.$http.post(`articles?draft=${draft}`, this.articleForm);
         this.$message.success(draft ? "存入草稿成功" : "发布文章成功");
+        this.$router.push("/article");
+      } catch (e) {
+        this.$message.error("操作失败");
+      }
+    },
+
+    // 修改文章
+    async updateArticle() {
+      try {
+        await this.$http.put(
+          `articles/${this.$route.query.id}?draft=false`,
+          this.articleForm
+        );
+        this.$message.success("修改文章成功");
         this.$router.push("/article");
       } catch (e) {
         this.$message.error("操作失败");
