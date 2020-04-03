@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import eventBus from "@/utils/eventBus";
 import auth from "@/utils/auth";
 export default {
   name: "my-home",
@@ -95,6 +96,10 @@ export default {
     // 2. 给data中数据赋值
     this.userName = user.name;
     this.userPhoto = user.photo;
+    // 接收Setting组件的传的用户名称的值
+    eventBus.$on("updateUserName", data => {
+      this.userName = data;
+    });
   },
   methods: {
     // 切换侧边栏展开与收起

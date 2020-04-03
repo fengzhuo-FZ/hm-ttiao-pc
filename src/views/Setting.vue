@@ -39,11 +39,17 @@
         </el-col>
       </el-row>
     </el-card>
+    <!-- 测试 -->
+    <com-a></com-a>
+    <com-b></com-b>
   </div>
 </template>
 
 <script>
+import ComA from "@/components/com-a.vue";
+import ComB from "@/components/com-b.vue";
 export default {
+  components: { ComA, ComB },
   name: "my-setting",
   data() {
     return {
