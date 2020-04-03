@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     // 初始化 柱状图
-    initBar() {
+    async initBar() {
       const myChart = echarts.init(this.$refs.main);
       const option = {
         color: ["#3398DB"],
@@ -81,7 +81,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            // x坐标的刻度说明文字
+            data: [],
             axisTick: {
               alignWithLabel: true
             }
@@ -97,10 +98,25 @@ export default {
             name: "直接访问",
             type: "bar",
             barWidth: "60%",
-            data: [10, 52, 200, 334, 390, 330, 220]
+            // 图表的每一个柱子需要数据
+            data: []
           }
         ]
       };
+      // 1. 获取后台统计数据
+      const {
+        data: { data }
+      } = await this.$http.get("statistics/followers");
+      // 2. 修改配置项中的数据
+      // data === {age:{le18:200,...}}
+      // xAxis[0].data 追加选项  series[0].data 追加选项
+      for (const key in data.age) {
+        option.xAxis[0].data.push(
+          key.replace("le", "小于").replace("gt", "大于") + "岁"
+        );
+        option.series[0].data.push(data.age[key]);
+      }
+      // 3. 使用这个配置绘制
       myChart.setOption(option);
     },
     // 分页
