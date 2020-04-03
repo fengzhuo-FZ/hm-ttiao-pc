@@ -100,6 +100,10 @@ export default {
     eventBus.$on("updateUserName", data => {
       this.userName = data;
     });
+    // 接收Setting组件的传的用户头像的值
+    eventBus.$on("updateUserPhoto", data => {
+      this.userPhoto = data;
+    });
   },
   methods: {
     // 切换侧边栏展开与收起
