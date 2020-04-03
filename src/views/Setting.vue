@@ -67,18 +67,26 @@ export default {
   methods: {
     // 修改用户信息
     async updateUser() {
-      // 准备后台需要的数据
-      const { name, intro, email } = this.userInfo;
-      // 发请求提交
-      await this.$http.patch("user/profile", { name, intro, email });
-      // 成功提示
-      this.$message.success("修改用户信息成功");
-      // 同步Home组件的用户名
-      eventBus.$emit("updateUserName", name);
-      // 同步本地存储的用户名  1获取用户信息  2修改用户信息  3重新存入用户信息
-      const user = auth.getUser();
-      user.name = name;
-      auth.setUser(user);
+      try {
+        // 准备后台需要的数据
+        const { name, intro, email } = this.userInfo;
+        // 发请求提交
+        await this.$http.patch("user/profile", { name, intro, email });
+        // 成功提示
+        this.$message.success("修改用户信息成功");
+        // 同步Home组件的用户名
+        eventBus.$emit("updateUserName", name);
+        // 同步本地存储的用户名  1获取用户信息  2修改用户信息  3重新存入用户信息
+        const user = auth.getUser();
+        user.name = name;
+        auth.setUser(user);
+      } catch (e) {
+        if (e.response && e.response.status === 409) {
+          this.$message.error("媒体名称已存在");
+        } else {
+          this.$message.error("修改用户信息失败");
+        }
+      }
     },
     // 获取用户信息
     async getUsetInfo() {
