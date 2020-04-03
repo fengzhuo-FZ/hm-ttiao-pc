@@ -10,6 +10,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 注册element
 import App from './App.vue'
 
+
+
 // 导入路由实例
 import router from './router/index'
 
